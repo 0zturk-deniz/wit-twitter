@@ -1,17 +1,38 @@
 package com.example.wit_tweet.mapper;
 
 import com.example.wit_tweet.dto.LikeRequestDto;
+import com.example.wit_tweet.dto.LikeResponseDto;
 import com.example.wit_tweet.entity.Like;
+import com.example.wit_tweet.entity.Tweet;
+import com.example.wit_tweet.entity.User;
+import com.example.wit_tweet.service.TweetService;
+import com.example.wit_tweet.service.UserService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LikeMapper {
 
-    public Like toEntity(LikeRequestDto likeRequestDto){
-        Like like = new Like();
-        like.setUser(likeRequestDto.userId());
-        like.setTweet(likeRequestDto.tweetId());
+    private UserService userService;
+    private TweetService tweetService;
 
-       return like;
+    public Like toEntity(LikeRequestDto likeRequestDto){
+        User user = userService.get(likeRequestDto.userId());
+        Tweet tweet = tweetService.get(likeRequestDto.tweetId());
+
+        Like like = new Like();
+        like.setUser(user);
+        like.setTweet(tweet);
+
+        return like;
+    }
+
+    public LikeResponseDto toResponseDto(Like like){
+        return new LikeResponseDto(like.getId(), like.getUserId(), like.getTweetId());
+    }
+
+    public Like updateEntity(Like likeToUpdate, LikeRequestDto likeRequestDto) {
+        likeToUpdate.setUser(userService.get(likeRequestDto.userId()));
+        likeToUpdate.setTweet(tweetService.get(likeRequestDto.tweetId()));
+        return likeToUpdate;
     }
 }

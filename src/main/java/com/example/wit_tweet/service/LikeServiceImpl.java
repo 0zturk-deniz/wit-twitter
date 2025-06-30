@@ -4,6 +4,7 @@ import com.example.wit_tweet.dto.LikeRequestDto;
 import com.example.wit_tweet.dto.LikeResponseDto;
 import com.example.wit_tweet.entity.Like;
 import com.example.wit_tweet.exceptions.LikeNotFoundException;
+import com.example.wit_tweet.mapper.LikeMapper;
 import com.example.wit_tweet.repository.LikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class LikeServiceImpl implements LikeService{
     private final LikeMapper likeMapper;
 
     @Override
-    public List<Like> getAll() {
+    public List<LikeResponseDto> getAll() {
         return likeRepository
                 .findAll()
                 .stream()
@@ -51,6 +52,17 @@ public class LikeServiceImpl implements LikeService{
         return likeMapper.toResponseDto(like);
     }
 
+    @Override
+    public LikeResponseDto update(Long id, LikeRequestDto likeRequestDto) {
+        Like existing = likeRepository.findById(id)
+                .orElseThrow(() -> new LikeNotFoundException(id + " id'li like bulunamadı."));
+
+        Like updated = likeMapper.updateEntity(existing, likeRequestDto);
+
+        Like saved = likeRepository.save(updated);
+
+        return likeMapper.toResponseDto(saved);
+    }
 
     @Override
     public void delete(Long id) {
