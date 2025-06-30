@@ -1,7 +1,7 @@
 package com.example.wit_tweet.controller;
 
 import com.example.wit_tweet.dto.LikeRequestDto;
-import com.example.wit_tweet.entity.Like;
+import com.example.wit_tweet.dto.LikeResponseDto;
 import com.example.wit_tweet.service.LikeService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +21,18 @@ public class LikeController {
     private final LikeService likeService;
 
     @GetMapping
-    public List<Like> getAll(){
+    public List<LikeResponseDto> getAll(){
         return likeService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Like getById(@Positive @PathVariable("id") Long id){
+    public LikeResponseDto getById(@Positive @PathVariable("id") Long id){
         return likeService.get(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Like save(@Validated @RequestBody LikeRequestDto like) {
+    public LikeResponseDto save(@Validated @RequestBody LikeRequestDto like) {
         return likeService.save(like);
     }
 

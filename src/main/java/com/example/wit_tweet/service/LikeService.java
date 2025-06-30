@@ -10,6 +10,5 @@ public interface LikeService {
     List<LikeResponseDto> getAll();
     LikeResponseDto get(Long id);
     LikeResponseDto save(LikeRequestDto likeRequestDto);
-    LikeResponseDto update(Long id, LikeRequestDto likeRequestDto);
     void delete(Long id);
 }

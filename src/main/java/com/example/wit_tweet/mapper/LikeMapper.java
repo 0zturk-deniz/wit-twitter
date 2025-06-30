@@ -9,6 +9,7 @@ import com.example.wit_tweet.service.TweetService;
 import com.example.wit_tweet.service.UserService;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class LikeMapper {
 
@@ -30,9 +31,5 @@ public class LikeMapper {
         return new LikeResponseDto(like.getId(), like.getUserId(), like.getTweetId());
     }
 
-    public Like updateEntity(Like likeToUpdate, LikeRequestDto likeRequestDto) {
-        likeToUpdate.setUser(userService.get(likeRequestDto.userId()));
-        likeToUpdate.setTweet(tweetService.get(likeRequestDto.tweetId()));
-        return likeToUpdate;
-    }
+
 }

@@ -1,5 +1,7 @@
 package com.example.wit_tweet.service;
 
+import com.example.wit_tweet.dto.RetweetRequestDto;
+import com.example.wit_tweet.dto.RetweetResponseDto;
 import com.example.wit_tweet.entity.Retweet;
 
 import java.util.List;
@@ -7,6 +9,6 @@ import java.util.List;
 public interface RetweetService {
     List<Retweet> getAll();
     Retweet get(Long id);
-    Retweet save(Retweet retweet);
+    RetweetResponseDto save(RetweetRequestDto retweetRequestDto);
     void delete(Long id);
 }

@@ -3,6 +3,9 @@ package com.example.wit_tweet.service;
 import com.example.wit_tweet.dto.LikeRequestDto;
 import com.example.wit_tweet.dto.LikeResponseDto;
 import com.example.wit_tweet.entity.Like;
+import com.example.wit_tweet.entity.Tweet;
+import com.example.wit_tweet.entity.User;
+import com.example.wit_tweet.exceptions.AlreadyLikedException;
 import com.example.wit_tweet.exceptions.LikeNotFoundException;
 import com.example.wit_tweet.mapper.LikeMapper;
 import com.example.wit_tweet.repository.LikeRepository;
@@ -16,6 +19,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService{
+
+    private UserService userService;
+    private TweetService tweetService;
 
     @Autowired
     private final LikeRepository likeRepository;
@@ -47,19 +53,16 @@ public class LikeServiceImpl implements LikeService{
     @Override
     public LikeResponseDto save(LikeRequestDto likeDto) {
 
-        Like like = likeRepository.save(likeMapper.toEntity(likeDto));
+        User user = userService.get(likeDto.userId());
+        Tweet tweet = tweetService.get(likeDto.tweetId());
 
-        return likeMapper.toResponseDto(like);
-    }
+        Optional<Like> existingLike = likeRepository.findByUserAndTweet(user, tweet);
+        if (existingLike.isPresent()) {
+            throw new AlreadyLikedException("Bu tweet zaten beğenilmiş.");
+        }
 
-    @Override
-    public LikeResponseDto update(Long id, LikeRequestDto likeRequestDto) {
-        Like existing = likeRepository.findById(id)
-                .orElseThrow(() -> new LikeNotFoundException(id + " id'li like bulunamadı."));
-
-        Like updated = likeMapper.updateEntity(existing, likeRequestDto);
-
-        Like saved = likeRepository.save(updated);
+        Like like = likeMapper.toEntity(likeDto);
+        Like saved = likeRepository.save(like);
 
         return likeMapper.toResponseDto(saved);
     }
