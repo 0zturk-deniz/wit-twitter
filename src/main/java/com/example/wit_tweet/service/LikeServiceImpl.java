@@ -1,5 +1,7 @@
 package com.example.wit_tweet.service;
 
+import com.example.wit_tweet.dto.LikeRequestDto;
+import com.example.wit_tweet.dto.LikeResponseDto;
 import com.example.wit_tweet.entity.Like;
 import com.example.wit_tweet.exceptions.LikeNotFoundException;
 import com.example.wit_tweet.repository.LikeRepository;
@@ -17,31 +19,38 @@ public class LikeServiceImpl implements LikeService{
     @Autowired
     private final LikeRepository likeRepository;
 
+    @Autowired
+    private final LikeMapper likeMapper;
+
     @Override
     public List<Like> getAll() {
-        return likeRepository.findAll();
+        return likeRepository
+                .findAll()
+                .stream()
+                .map(likeMapper::toResponseDto)
+                .toList();
     }
 
     @Override
-    public Like get(Long id) {
-        return likeRepository.findById(id).orElseThrow(()-> new LikeNotFoundException(id + "li like bulunamadı."));
-    }
+    public LikeResponseDto get(Long id) {
 
-    @Override
-    public Like save(Like like) {
+        Optional<Like> optionalLike = likeRepository
+                .findById(id);
 
-        return likeRepository.save(like);
-    }
-
-    @Override
-    public Like update(Long id, Like like) {
-
-        Optional<Like> optionalLike = likeRepository.findById(id);
         if(optionalLike.isPresent()){
-            like.setId(id);
+            return likeMapper.toResponseDto(optionalLike.get());
         }
-        return likeRepository.save(like);
+        throw new LikeNotFoundException(id + "li like bulunamadı.");
     }
+
+    @Override
+    public LikeResponseDto save(LikeRequestDto likeDto) {
+
+        Like like = likeRepository.save(likeMapper.toEntity(likeDto));
+
+        return likeMapper.toResponseDto(like);
+    }
+
 
     @Override
     public void delete(Long id) {
