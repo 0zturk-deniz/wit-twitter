@@ -2,9 +2,7 @@ package com.example.wit_tweet.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
-import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -20,10 +18,10 @@ public class Like {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
-    @Column(name = "tweet_id")
+    @Column(name = "tweet_id", insertable = false, updatable = false)
     private Long tweetId;
 
     @ManyToOne

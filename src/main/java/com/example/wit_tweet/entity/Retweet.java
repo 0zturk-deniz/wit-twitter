@@ -19,12 +19,6 @@ public class Retweet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
-
-    @Column(name = "tweet_id")
-    private Long tweetId;
-
     @Column(name = "retweet_time")
     private OffsetDateTime retweetTime;
 

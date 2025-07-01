@@ -26,7 +26,7 @@ public class ReplyMapper {
     }
 
     public ReplyResponseDto toResponseDto(Reply reply){
-        return new ReplyResponseDto((reply.getId()), reply.getUserId(), reply.getTweetId(), reply.getReplyTime());
+        return new ReplyResponseDto((reply.getId()), reply.getUser().getId(), reply.getTweet().getId(), reply.getReplyTime());
     }
 
 

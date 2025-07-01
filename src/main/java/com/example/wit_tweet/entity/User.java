@@ -3,7 +3,7 @@ package com.example.wit_tweet.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.data.annotation.Id;
+
 
 import java.util.Objects;
 import java.util.Set;
@@ -31,8 +31,14 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Tweet> tweets;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Like> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Reply> replies;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Retweet> retweets;
 
     public void addTweet(Tweet tweet){
