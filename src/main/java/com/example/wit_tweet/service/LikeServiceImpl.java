@@ -51,10 +51,17 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
+    public Like getEntityById(Long id){
+        return likeRepository
+                .findById(id)
+                .orElseThrow(()-> new LikeNotFoundException(id + "li like bulunamadı."));
+    }
+
+    @Override
     public LikeResponseDto save(LikeRequestDto likeDto) {
 
-        User user = userService.get(likeDto.userId());
-        Tweet tweet = tweetService.get(likeDto.tweetId());
+        User user = userService.getEntityById(likeDto.userId());
+        Tweet tweet = tweetService.getEntityById(likeDto.tweetId());
 
         Optional<Like> existingLike = likeRepository.findByUserAndTweet(user, tweet);
         if (existingLike.isPresent()) {

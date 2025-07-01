@@ -40,10 +40,17 @@ public class RetweetServiceImpl implements RetweetService{
     }
 
     @Override
+    public Retweet getEntityById(Long id){
+        return retweetRepository
+                .findById(id)
+                .orElseThrow(()->new RetweetNotFoundException(id + "li retweet bulunamadı."));
+    }
+
+    @Override
     public RetweetResponseDto save(RetweetRequestDto retweetRequestDto) {
 
-        User user = userService.get(retweetRequestDto.userId());
-        Tweet tweet = tweetService.get(retweetRequestDto.tweetId());
+        User user = userService.getEntityById(retweetRequestDto.userId());
+        Tweet tweet = tweetService.getEntityById(retweetRequestDto.tweetId());
 
         Optional<Retweet> existingRetweet = retweetRepository.findByUserAndTweet(user, tweet);
         if(existingRetweet.isPresent()){

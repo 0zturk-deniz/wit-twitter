@@ -19,7 +19,7 @@ public class TweetMapper {
     private TweetService tweetService;
 
     public Tweet toEntity(TweetRequestDto tweetRequestDto){
-        User user = userService.get(tweetRequestDto.userId());
+        User user = userService.getEntityById(tweetRequestDto.userId());
 
         Tweet tweet = new Tweet();
         tweet.setContent(tweetRequestDto.content());

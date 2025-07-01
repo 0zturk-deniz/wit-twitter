@@ -18,8 +18,8 @@ public class RetweetMapper {
     private TweetService tweetService;
 
     public Retweet toEntity(RetweetRequestDto retweetRequestDto){
-        User user = userService.get(retweetRequestDto.userId());
-        Tweet tweet = tweetService.get(retweetRequestDto.tweetId());
+        User user = userService.getEntityById(retweetRequestDto.userId());
+        Tweet tweet = tweetService.getEntityById(retweetRequestDto.tweetId());
 
 
         Retweet retweet = new Retweet();

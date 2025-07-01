@@ -42,6 +42,13 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
+    public Reply getEntityById(Long id){
+        return replyRepository
+                .findById(id)
+                .orElseThrow(()->new ReplyNotFoundException(id + "li reply bulunamadı."));
+    }
+
+    @Override
     public ReplyResponseDto save(ReplyRequestDto replyRequestDto) {
 
         Reply reply = replyMapper.toEntity(replyRequestDto);

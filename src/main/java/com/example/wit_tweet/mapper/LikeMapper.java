@@ -17,8 +17,8 @@ public class LikeMapper {
     private TweetService tweetService;
 
     public Like toEntity(LikeRequestDto likeRequestDto){
-        User user = userService.get(likeRequestDto.userId());
-        Tweet tweet = tweetService.get(likeRequestDto.tweetId());
+        User user = userService.getEntityById(likeRequestDto.userId());
+        Tweet tweet = tweetService.getEntityById(likeRequestDto.tweetId());
 
         Like like = new Like();
         like.setUser(user);

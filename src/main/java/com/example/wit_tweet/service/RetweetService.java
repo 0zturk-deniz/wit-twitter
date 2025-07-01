@@ -11,4 +11,6 @@ public interface RetweetService {
     Retweet get(Long id);
     RetweetResponseDto save(RetweetRequestDto retweetRequestDto);
     void delete(Long id);
+
+    Retweet getEntityById(Long id);
 }

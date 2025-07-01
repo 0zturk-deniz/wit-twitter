@@ -11,4 +11,6 @@ public interface TweetService {
     TweetResponseDto get(Long id);
     TweetResponseDto save(TweetRequestDto tweet);
     void delete(Long id);
+
+    Tweet getEntityById(Long id);
 }

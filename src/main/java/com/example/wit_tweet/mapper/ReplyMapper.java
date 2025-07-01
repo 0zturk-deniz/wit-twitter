@@ -15,8 +15,8 @@ public class ReplyMapper {
     private TweetService tweetService;
 
     public Reply toEntity(ReplyRequestDto replyRequestDto){
-        User user = userService.get(replyRequestDto.userId());
-        Tweet tweet = tweetService.get(replyRequestDto.tweetId());
+        User user = userService.getEntityById(replyRequestDto.userId());
+        Tweet tweet = tweetService.getEntityById(replyRequestDto.tweetId());
 
         Reply reply = new Reply();
         reply.setUser(user);

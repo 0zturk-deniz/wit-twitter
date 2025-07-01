@@ -11,4 +11,6 @@ public interface LikeService {
     LikeResponseDto get(Long id);
     LikeResponseDto save(LikeRequestDto likeRequestDto);
     void delete(Long id);
+
+    Like getEntityById(Long id);
 }

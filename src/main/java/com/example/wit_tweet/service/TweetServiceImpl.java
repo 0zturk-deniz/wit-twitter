@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TweetServiceImpl implements TweetService {
 
+
     private UserService userService;
     private TweetMapper tweetMapper;
 
@@ -39,6 +40,13 @@ public class TweetServiceImpl implements TweetService {
                 .findById(id)
                 .map(tweetMapper::toResponseDto)
                 .orElseThrow(()-> new TweetNotFoundException(id + "li tweet bulunamadı."));
+    }
+
+    @Override
+    public Tweet getEntityById(Long id){
+        return tweetRepository
+                .findById(id)
+                .orElseThrow(()->new TweetNotFoundException(id + "li tweet bulunamadı."));
     }
 
     @Override
