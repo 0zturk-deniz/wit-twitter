@@ -23,6 +23,6 @@ public class UserMapper {
     }
 
     public UserResponseDto toResponseDto(User user){
-        return new UserResponseDto(user.getId(), user.getUserName(), user.getPhotoUrl());
+        return new UserResponseDto(user.getId(), user.getUsername(), user.getPhotoUrl());
     }
 }
