@@ -30,7 +30,7 @@ public class UserController {
         return userService.get(id);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto save(@Validated @RequestBody UserRequestDto user){
         return userService.save(user);

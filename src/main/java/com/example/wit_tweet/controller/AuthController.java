@@ -5,11 +5,9 @@ import com.example.wit_tweet.dto.RegisterResponseDto;
 import com.example.wit_tweet.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,6 +18,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
     public RegisterResponseDto register(@Validated @RequestBody RegisterRequestDto registerRequestDto){
         return authService.register(registerRequestDto);
     }
